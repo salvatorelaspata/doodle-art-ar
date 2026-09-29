@@ -110,3 +110,6 @@ Assets/Resources/VuforiaConfiguration.asset.meta
 /IOS*/
 /ANDROID/
 /WEB/
+
+# File intermedi CMake/Ninja della build Android (buildStagingDirectory di Gradle)
+/.utmp/
