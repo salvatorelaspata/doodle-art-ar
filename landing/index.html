@@ -93,6 +93,13 @@
           avvicinati per scoprirne la storia. Quando vuoi, un tocco su "Vedi in AR" ti porta
           dalla galleria alla realtà aumentata.
         </p>
+        <a class="pulsante pulsante--blu pulsante--avanti" id="entra-galleria" hidden>
+          <span class="pulsante__icona" aria-hidden="true"></span>
+          <span class="pulsante__testo">
+            <span class="pulsante__riga">Nel browser</span>
+            <span class="pulsante__nome">Entra nella galleria</span>
+          </span>
+        </a>
       </div>
       <figure class="cornice">
         <img src="img/schermata_galleria.jpg" alt="La galleria 3D: una sala con opere colorate, piante e una panca" width="1400" height="647" loading="lazy">
@@ -112,7 +119,7 @@
     const LINK = {
       appStore: "",   // es. "https://apps.apple.com/app/id0000000000"
       googlePlay: "", // es. "https://play.google.com/store/apps/details?id=com.salvatorelaspata.doodleart"
-      web: ""         // es. "gioca/" se la build Web viene pubblicata dentro landing/gioca/
+      web: "gioca/"   // build Web pubblicata dentro landing/gioca/
     };
 
     document.querySelectorAll("[data-negozio]").forEach(function (pulsante) {
@@ -128,9 +135,11 @@
     }
 
     if (LINK.web) {
-      const provaWeb = document.getElementById("prova-web");
-      provaWeb.href = LINK.web;
-      provaWeb.hidden = false;
+      ["prova-web", "entra-galleria"].forEach(function (id) {
+        const collegamento = document.getElementById(id);
+        collegamento.href = LINK.web;
+        collegamento.hidden = false;
+      });
     }
 
     // Su Android il pulsante di Google Play viene mostrato per primo

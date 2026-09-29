@@ -346,11 +346,38 @@ const LINK = {
   on the App Store" dal sito Apple Marketing e "Get it on Google Play" da Google. Hanno regole
   d'uso precise, per questo ora ci sono pulsanti nello stile dell'app senza i marchi.
 
-**Build Web sulla stessa pagina (facoltativo):** copia il contenuto della build Web in
-`landing/gioca/` e imposta `web: "gioca/"`. Nella landing comparirà il link "Oppure prova la
-galleria nel browser". La compressione Brotli con *Decompression Fallback* funziona anche su
-GitHub Pages. Tieni però conto che ogni build aggiunge qualche decina di MB alla storia del
-repository. Se diventa un problema, meglio pubblicarla su itch.io e mettere qui quel link.
+### La build Web nella landing
+
+La build Web è pubblicata dentro la landing, in `landing/gioca/`, quindi si gioca da
+`https://salvatorelaspata.github.io/doodle-art-ar/gioca/`. In `index.html` è impostato
+`web: "gioca/"`, per cui la landing mostra:
+
+- il link "Oppure prova la galleria nel browser" sotto i pulsanti degli store;
+- il pulsante **Entra nella galleria** nella sezione della galleria.
+
+Nel gioco il pulsante "Scarica l'app" dell'avviso AR riporta alla landing.
+
+**Aggiornare la build:**
+
+1. Rifai la build con il profilo **Web**, per esempio nella cartella `WEB/`, che è ignorata
+   da git.
+2. Sostituisci la copia nella landing e togli `StreamingAssets`: contiene solo il database
+   Vuforia, che nel browser non serve.
+   ```
+   rm -rf landing/gioca && mkdir -p landing/gioca
+   cp -R WEB/<cartella della build>/. landing/gioca/
+   rm -rf landing/gioca/StreamingAssets
+   ```
+3. Commit e push su `main`: il workflow pubblica landing e gioco insieme.
+
+Prima di pubblicare, il workflow controlla che `landing/gioca/` contenga `index.html` e il
+loader in `Build/`. Se la copia è incompleta si ferma con un errore, invece di pubblicare un
+gioco rotto.
+
+La compressione Brotli con *Decompression Fallback* funziona su GitHub Pages anche senza
+header configurabili. Ogni build pesa circa 13 MB e si aggiunge alla storia del repository.
+Se gli aggiornamenti diventano molto frequenti, conviene pubblicarla su itch.io e mettere
+quel link in `LINK.web`.
 
 ## Costi in sintesi
 

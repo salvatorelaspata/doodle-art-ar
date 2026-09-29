@@ -115,6 +115,23 @@ a:focus-visible {
   background: var(--giallo);
 }
 
+.pulsante--blu {
+  background: var(--blu);
+}
+
+.pulsante[hidden] {
+  display: none;
+}
+
+/* freccia verso destra invece che verso il basso (non è un download) */
+.pulsante--avanti .pulsante__icona {
+  transform: none;
+}
+
+.galleria__testo .pulsante {
+  margin-top: 28px;
+}
+
 /* come BottoneDoodle nell'app: premendo, l'adesivo scende sulla sua ombra */
 .pulsante[href]:active {
   transform: translate(var(--ombra), var(--ombra));

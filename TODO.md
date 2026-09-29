@@ -72,8 +72,9 @@ I dettagli di ogni voce sono in [RELEASE.md](RELEASE.md).
       Oggi mostra le opere segnaposto.
 - [ ] **Norme sulla privacy:** pagina richiesta da entrambi gli store, per via della
       fotocamera. Può stare nella landing, ad esempio `landing/privacy.html`.
-- [ ] **Web:** prima build di prova con il profilo `Web` e verifica dell'avviso "La realtà
-      aumentata è nell'app" nel browser, anche da telefono.
+- [ ] **Web:** dopo la pubblicazione in `landing/gioca/`, provare la galleria dai browser dei
+      telefoni (Safari su iPhone, Chrome su Android). Verificare anche l'avviso "La realtà
+      aumentata è nell'app" e l'apertura della landing dal pulsante "Scarica l'app".
 - [ ] **Web:** template personalizzato con `icona_app.png` come favicon.
 - [ ] **Android 12+:** la schermata di avvio di sistema mostra l'icona su sfondo del tema;
       valutare un tema personalizzato color crema per coerenza con lo splash.

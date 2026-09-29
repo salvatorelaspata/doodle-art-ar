@@ -12,7 +12,8 @@ Il nome dell'app è **Doodle Art Experience** (bundle ID `com.salvatorelaspata.d
 - Le attività aperte sono elencate in [TODO.md](TODO.md).
 - Le opzioni per distribuire l'app (Android, iOS, Web) sono descritte in
   [RELEASE.md](RELEASE.md).
-- La landing con i link agli store è in `landing/` e si pubblica su GitHub Pages con il
+- La landing con i link agli store è in `landing/`, con la build Web in `landing/gioca/`, e si
+  pubblica su GitHub Pages con il
   workflow `.github/workflows/landing.yml` (vedi RELEASE.md, "Landing").
 
 ## Requisiti
