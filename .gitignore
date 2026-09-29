@@ -61,8 +61,15 @@ sysinfo.txt
 # Builds
 *.apk
 *.aab
+*.ipa
 *.unitypackage
 *.app
+
+# Chiavi e profili di firma (Android e iOS): non vanno mai versionati
+*.keystore
+*.jks
+*.p12
+*.mobileprovision
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -97,7 +104,5 @@ mono_crash*.json
 *.zip
 *.tar.gz
 # Configurazione Vuforia: contiene la license key, non va versionata.
-# NB: la regola vale solo per file non ancora tracciati — su questo repo l'asset
-# risulta gia' nell'indice, quindi ha effetto solo ricreando il repository da zero.
 Assets/Resources/VuforiaConfiguration.asset
 Assets/Resources/VuforiaConfiguration.asset.meta

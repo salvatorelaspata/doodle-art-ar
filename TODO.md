@@ -53,14 +53,29 @@ in ordine di priorità indicativo.
 - [ ] Galleria: disattivare le ombre della Directional Light, perché lo shader `Doodle/Toon`
       non usa luci in tempo reale.
 
-## Progetto e pubblicazione
+## Distribuzione
 
-- [ ] Revocare e rigenerare la license key Vuforia, compromessa (vedi README), prima di
-      qualsiasi uso reale.
+I dettagli di ogni voce sono in [RELEASE.md](RELEASE.md).
+
+- [ ] **Android:** creare il keystore di firma e conservarlo fuori dal repository, con un
+      backup.
+- [ ] **Android:** registrarsi come sviluppatore verificato nell'Android Developer Console,
+      necessario per distribuire APK fuori dal Play Store (obbligatorio in Italia dal 2027).
+- [ ] **iOS:** iscrizione all'Apple Developer Program e prima build su iPhone da Xcode, poi
+      TestFlight.
+- [ ] **Web:** Build Profile senza la scena AR. La scheda "Esperienza AR" del menu e il
+      pulsante "Vedi in AR" della galleria vanno nascosti o devono invitare a scaricare l'app,
+      perché oggi caricherebbero una scena assente.
+- [ ] **Web:** template personalizzato con `icona_app.png` come favicon.
+- [ ] **Android 12+:** la schermata di avvio di sistema mostra l'icona su sfondo del tema;
+      valutare un tema personalizzato color crema per coerenza con lo splash.
+- [ ] **Store:** norme sulla privacy (l'app usa la fotocamera), screenshot di telefono e
+      tablet, testi delle schede.
+
+## Progetto
+
 - [ ] Recuperare `Packages/com.ptc.vuforia.engine-11.4.4.tgz`: oggi il progetto si apre solo
       grazie alla copia estratta in `Library/`.
-- [ ] Player Settings: nome prodotto (`My project`), azienda (`DefaultCompany`) e bundle id
-      sono ancora quelli del template URP.
 - [ ] `interazione_cube.cs`: sostituire `FindObjectOfType` (deprecato, warning CS0618) con
       `FindAnyObjectByType` e limitare l'ingrandimento del 10% a ogni tocco, che oggi non ha
       un tetto.

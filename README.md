@@ -7,7 +7,11 @@ riconoscimento di un Image Target (un disegno / "doodle" stampato).
 Interfaccia e galleria seguono uno stile doodle/cartoon: contorni neri spessi, ombre
 nette e colori pop, ripresi dall'opera usata come target.
 
-Le attività aperte sono elencate in [TODO.md](TODO.md).
+Il nome dell'app è **Doodle Art Experience** (bundle ID `com.salvatorelaspata.doodleart`).
+
+- Le attività aperte sono elencate in [TODO.md](TODO.md).
+- Le opzioni per distribuire l'app (Android, iOS, Web) sono descritte in
+  [RELEASE.md](RELEASE.md).
 
 ## Requisiti
 
@@ -54,38 +58,16 @@ macchina o dopo ogni clone pulito.
 ### License key Vuforia
 
 La configurazione Vuforia, incluse `vuforiaLicenseKey` e `ufoLicenseKey`, è salvata in
-`Assets/Resources/VuforiaConfiguration.asset`.
+`Assets/Resources/VuforiaConfiguration.asset`. L'asset è escluso da `.gitignore` e non è
+mai stato versionato in questo repository: la chiave resta solo sulla macchina di
+sviluppo.
 
-> **Attenzione:** l'asset è tracciato da git e il commit iniziale è già stato pubblicato
-> sul repository GitHub pubblico. Le chiavi presenti in questa versione del progetto
-> devono quindi essere considerate **compromesse**: chiunque può leggerle dalla storia
-> del repository, e riscrivere la storia non basterebbe a renderle di nuovo segrete
-> (fork, cache e mirror restano).
-
-Il progetto è in fase di sviluppo e le chiavi attuali sono di prova, quindi la
-situazione è tollerata. Prima di un uso reale — pubblicazione, condivisione con altri,
-o passaggio a una licenza a pagamento:
-
-1. Revoca la chiave compromessa dal
-   [License Manager Vuforia](https://developer.vuforia.com/vui/develop/licenses)
-   e generane una nuova.
-2. Verifica che `Assets/Resources/VuforiaConfiguration.asset` sia ignorato da git
-   (la regola è già presente in `.gitignore`, vedi sotto).
-3. Inserisci la nuova chiave localmente da *Window → Vuforia Configuration*, senza
-   committare l'asset.
-
-#### Se ricrei il repository da zero
-
-`.gitignore` contiene già la regola che esclude `VuforiaConfiguration.asset`. La regola
-**non ha effetto sul repository attuale**, perché git continua a tracciare i file già
-aggiunti all'indice: vale solo a partire da un repository nuovo. Quindi, ricreando il
-repo (`rm -rf .git` + nuovo repo GitHub), l'asset resterà automaticamente fuori dal
-primo commit — a patto di aver prima rigenerato la chiave, dato che quella vecchia
-resta pubblica nel repo precedente finché non lo elimini.
-
-Per chi clona un repo in cui l'asset non è versionato: Unity rigenera
-`VuforiaConfiguration.asset` con valori vuoti alla prima importazione di Vuforia, ed è
-sufficiente incollare la propria chiave da *Window → Vuforia Configuration*.
+Su un clone nuovo Unity rigenera `VuforiaConfiguration.asset` con valori vuoti alla prima
+importazione di Vuforia. Basta incollare la propria chiave da *Window → Vuforia
+Configuration*, generandola dal
+[License Manager Vuforia](https://developer.vuforia.com/vui/develop/licenses) se serve.
+Il piano Basic è gratuito e permette di pubblicare app con Image Target, senza watermark
+(vedi [RELEASE.md](RELEASE.md)).
 
 ## Struttura del progetto
 
@@ -113,6 +95,7 @@ Assets/
 │   ├── Menu/                        # Pannelli, icone e decorazioni dell'interfaccia
 │   └── Galleria/                    # Icone dei pulsanti della galleria
 ├── Textures/Galleria/               # Carta da parati e parquet (ripetibili)
+├── Branding/                        # Icona dell'app (anche adattiva Android) e splash screen
 ├── Resources/
 │   └── VuforiaConfiguration.asset   # Configurazione e license key Vuforia
 ├── StreamingAssets/Vuforia/
@@ -221,8 +204,9 @@ veloce in orizzontale per lo swipe. Per le proporzioni di un telefono usa il
    collegata Vuforia usa la *Play Mode* via webcam.
 3. Inquadra il target: il contenuto agganciato all'Image Target compare in overlay.
 
-Per il test su dispositivo: *File → Build Settings*, seleziona Android o iOS e compila.
+Per il test su dispositivo: *File → Build Profiles*, seleziona Android o iOS e compila.
 Su Android l'architettura target è ARM64 e il minimo SDK richiesto è il 26 (Android 8.0).
+I passaggi completi (firma, TestFlight, Google Play, Web) sono in [RELEASE.md](RELEASE.md).
 
 ## Note tecniche
 
