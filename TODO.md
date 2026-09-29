@@ -63,9 +63,12 @@ I dettagli di ogni voce sono in [RELEASE.md](RELEASE.md).
       necessario per distribuire APK fuori dal Play Store (obbligatorio in Italia dal 2027).
 - [ ] **iOS:** iscrizione all'Apple Developer Program e prima build su iPhone da Xcode, poi
       TestFlight.
-- [ ] **Web:** Build Profile senza la scena AR. La scheda "Esperienza AR" del menu e il
-      pulsante "Vedi in AR" della galleria vanno nascosti o devono invitare a scaricare l'app,
-      perché oggi caricherebbero una scena assente.
+- [ ] **Landing:** pubblicare la pagina con i pulsanti per scaricare l'app dagli store e
+      aggiornare l'indirizzo in `LinkApp.PaginaDownload`. Oggi è il segnaposto
+      `https://salvatorelaspata.github.io/doodle-art-ar/`, che l'avviso "Scarica l'app" della
+      build Web apre già.
+- [ ] **Web:** prima build di prova con il profilo `Web` e verifica dell'avviso "La realtà
+      aumentata è nell'app" nel browser, anche da telefono.
 - [ ] **Web:** template personalizzato con `icona_app.png` come favicon.
 - [ ] **Android 12+:** la schermata di avvio di sistema mostra l'icona su sfondo del tema;
       valutare un tema personalizzato color crema per coerenza con lo splash.

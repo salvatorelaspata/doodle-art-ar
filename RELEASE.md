@@ -25,6 +25,7 @@ Già impostato in *Project Settings → Player*:
 | Android | Minimo Android 8.0 (API 26), target automatico, ARM64, Vulkan + OpenGL ES 3 |
 | iOS | Minimo iOS 15.0, Metal |
 | Orientamento | Rotazione automatica: menu, galleria e pulsanti si adattano a verticale e orizzontale |
+| Web | Profilo `Web` senza la scena AR, avviso "scarica l'app" al posto dell'AR, compressione Brotli con *Decompression Fallback* |
 
 Il logo "Made with Unity" è stato disattivato, cosa consentita da Unity 6 anche con la
 licenza Personal. Si riattiva da *Player → Splash Image → Show Unity Logo*.
@@ -41,8 +42,8 @@ Ancora da fare, perché dipende da account e segreti personali:
       su Android è il *Bundle Version Code*, su iOS il *Build*.
 - [ ] Verificare che `Assets/Resources/VuforiaConfiguration.asset` contenga una license key
       valida. È solo in locale e non è versionato.
-- [ ] Controllare le scene in *Build Profiles*: tutte e tre per le app, senza la scena AR per
-      il Web (vedi [Web](#web)).
+- [ ] Controllare le scene in *Build Profiles*. Le app usano la lista globale con tutte e tre
+      le scene, il profilo `Web` solo menu e galleria (vedi [Web](#web)).
 - [ ] Provare la build su almeno un dispositivo reale per piattaforma.
 
 ---
@@ -102,12 +103,35 @@ conviene quindi registrarsi come sviluppatore verificato nell'Android Developer 
 
 ### Come fare la build
 
-1. *File → Build Profiles → Android → Switch Platform*. La prima volta reimporta tutti gli
-   asset e ci vuole qualche minuto.
-2. Per i test: *Development Build* attivo, poi **Build** (APK) o **Build And Run** (telefono
-   collegato).
-3. Per il Play Store: *Development Build* disattivo e *Build App Bundle (Google Play)* attivo,
-   poi **Build** (AAB).
+Oggi l'editor ha come piattaforma attiva *macOS*: il primo passaggio ad Android reimporta
+tutti gli asset e richiede qualche minuto. I cambi successivi sono più rapidi.
+
+**Una volta sola, sul telefono:**
+
+1. *Impostazioni → Info sul telefono*: tocca 7 volte *Numero build* per attivare le
+   *Opzioni sviluppatore*.
+2. Nelle *Opzioni sviluppatore* attiva *Debug USB*, collega il cavo e autorizza il Mac.
+
+**Build di test:**
+
+1. *File → Build Profiles → Android → Switch Platform*.
+2. Nelle opzioni del profilo:
+   - *Development Build* attivo;
+   - *Run Device* sul tuo telefono;
+   - *Build App Bundle (Google Play)* disattivo, così esce un APK.
+3. Premi **Build And Run** e salva in `Builds/Android/DoodleArt.apk`. Unity compila e installa
+   l'app sul telefono. La prima build è lenta (vari minuti), le successive molto meno.
+4. Per le build di test la firma non serve: Unity usa da solo un keystore di debug.
+5. Per condividerla basta mandare l'APK. Chi lo riceve deve consentire l'installazione di app
+   sconosciute all'app con cui apre il file.
+
+**Build per Google Play:**
+
+1. Crea il keystore da *Player → Publishing Settings → Keystore Manager* e conservalo fuori
+   dal repository (vedi [Firma dell'app](#firma-dellapp)).
+2. Disattiva *Development Build* e attiva *Build App Bundle (Google Play)*.
+3. Aumenta il *Bundle Version Code* e premi **Build**: ottieni un `.aab`.
+4. Caricalo in Play Console, nel test interno.
 
 ---
 
@@ -145,13 +169,33 @@ sull'account, quindi per ora non sono una via pratica.
 
 ### Come fare la build
 
-1. *File → Build Profiles → iOS → Switch Platform*, poi **Build**. Unity genera un progetto
-   Xcode: scegli una cartella dentro `Builds/`, che è già ignorata da git.
-2. Apri `Unity-iPhone.xcodeproj` in Xcode, poi *Signing & Capabilities → Team* e seleziona
-   il tuo account (firma automatica).
-3. **Sul tuo iPhone:** collegalo, selezionalo come destinazione e premi *Run*.
-4. **Per TestFlight o App Store:** *Product → Archive*, poi *Distribute App → App Store
-   Connect*. La build compare in TestFlight dopo l'elaborazione di Apple.
+**Una volta sola:**
+
+1. In Xcode aggiungi il tuo Apple ID da *Settings → Accounts*.
+2. Sull'iPhone attiva la *Modalità sviluppatore* (*Impostazioni → Privacy e sicurezza*),
+   collegalo al Mac e rispondi "Autorizza questo computer".
+
+**Build di test:**
+
+1. *File → Build Profiles → iOS → Switch Platform*.
+2. Premi **Build** e scegli `Builds/iOS`, già ignorata da git. Unity genera un progetto Xcode,
+   non l'app.
+3. Apri `Builds/iOS/Unity-iPhone.xcodeproj`.
+4. Seleziona il target *Unity-iPhone*, apri *Signing & Capabilities*, spunta *Automatically
+   manage signing* e scegli il tuo *Team*. Il bundle ID arriva già da Unity.
+5. Scegli il tuo iPhone come destinazione e premi **Run** (⌘R).
+6. Con un Apple ID gratuito, la prima volta devi autorizzare lo sviluppatore sull'iPhone
+   (*Impostazioni → Generali → VPN e gestione dispositivi*). In questo caso l'app scade dopo
+   7 giorni.
+7. Quando ricompili, Unity chiede se sostituire la cartella o aggiungere le modifiche:
+   **Append** conserva le impostazioni di firma fatte in Xcode.
+
+**TestFlight** (serve l'Apple Developer Program):
+
+1. In App Store Connect crea l'app con il bundle ID `com.salvatorelaspata.doodleart`.
+2. In Xcode scegli come destinazione *Any iOS Device (arm64)*, poi *Product → Archive*.
+3. Nell'Organizer: *Distribute App → App Store Connect → Upload*.
+4. Dopo l'elaborazione di Apple, aggiungi i tester in TestFlight.
 
 ---
 
@@ -168,22 +212,48 @@ sull'account, quindi per ora non sono una via pratica.
 Unity 6 supporta anche i browser dei telefoni: Chrome, Firefox, Edge e Safari su iOS 15 e
 successivi, che devono avere WebGL 2. WebGPU è ancora sperimentale.
 
-### Preparazione della build Web
+### Com'è preparata la build Web
 
-- **Senza la scena AR:** crea un *Build Profile* Web con solo `01_MenuPrincipale` e
-  `02_StanzaVirtuale3D`.
-- **Pulsanti AR da adattare:** la scheda "Esperienza AR" del menu e "Vedi in AR" della
-  galleria oggi caricano `03_EsperienzaAR`. Nel Web quella scena non c'è, quindi vanno
-  nascosti o devono mostrare un invito a scaricare l'app (vedi `TODO.md`).
-- **Compressione:** Brotli dà i file più piccoli, ma il server deve inviare gli header giusti
-  (`Content-Encoding: br` più il `Content-Type` corretto). Se l'hosting non permette di
-  configurarli, attiva *Decompression Fallback* oppure usa Gzip.
-- **Formato delle texture:** ASTC per i browser dei telefoni, DXT/BC per i computer. Scegli in
-  base al pubblico principale oppure prepara due build.
+- **Profilo `Web`** (`Assets/Settings/Build Profiles/Web.asset`): contiene solo
+  `01_MenuPrincipale` e `02_StanzaVirtuale3D`. La lista delle scene di Android e iOS resta
+  quella globale, con tutte e tre le scene. Il profilo usa le Player Settings globali, quindi
+  nome, versione e icone sono gli stessi delle app.
+- **Avviso al posto dell'AR:** nella build Web la scheda "Esperienza AR" del menu e il pulsante
+  "Vedi in AR" della galleria non caricano la scena AR. Mostrano invece l'avviso "La realtà
+  aumentata è nell'app", con il pulsante **Scarica l'app** che apre la landing con i link agli
+  store.
+  - Il comportamento è in `RouterController.ApriEsperienzaAR` (`#if UNITY_WEBGL`).
+  - Il pulsante usa `PulsanteLinkEsterno` e il plugin `Plugins/WebGL/LinkEsterni.jslib`: la
+    nuova scheda si apre al rilascio del dito o del mouse, così i browser non la bloccano come
+    popup.
+- **Indirizzo della landing:** è in un solo punto, `LinkApp.PaginaDownload`. Oggi vale
+  `https://salvatorelaspata.github.io/doodle-art-ar/`, un segnaposto da aggiornare quando la
+  landing sarà pubblicata.
+- **Compressione:** Brotli, con *Decompression Fallback* attivo. Così la build funziona anche
+  su hosting senza header configurabili come GitHub Pages e itch.io. Su un hosting che invia
+  `Content-Encoding: br` si può disattivare il fallback per avere un avvio un po' più rapido.
+- **Formato delle texture:** ASTC per i browser dei telefoni, DXT/BC per i computer. Si sceglie
+  nelle opzioni del profilo in base al pubblico principale, oppure si preparano due build.
 - **Icona del browser (favicon):** il template *Default* usa quella di Unity. Per usare
-  `icona_app.png` serve un template Web personalizzato.
+  `icona_app.png` serve un template Web personalizzato (vedi `TODO.md`).
 - **Orientamento:** nel browser non si può bloccare, ma l'interfaccia si adatta già a entrambi.
 - **HTTPS:** necessario per l'accesso alla fotocamera, se in futuro aggiungi AR nel browser.
+
+### Come fare la build
+
+1. *File → Build Profiles*, seleziona il profilo **Web** e premi *Switch Profile*. La prima
+   volta reimporta gli asset per il Web.
+2. Se serve, scegli il formato delle texture nelle opzioni del profilo.
+3. Premi **Build And Run**. Unity avvia un piccolo server locale e apre la build nel browser.
+   Aprire `index.html` con un doppio clic invece non funziona.
+4. Per provare l'avviso nell'editor basta il Play Mode con il profilo Web attivo: il simbolo
+   `UNITY_WEBGL` è definito anche lì. L'apertura della landing invece funziona come nel
+   browser solo nella build vera.
+5. Per pubblicarla:
+   - **itch.io:** comprimi in uno zip il contenuto della cartella (con `index.html` in radice),
+     crea un progetto di tipo HTML e spunta "This file will be played in the browser".
+   - **Netlify:** trascina la cartella su Netlify Drop.
+   - **GitHub Pages:** pubblica la cartella su un branch `gh-pages`.
 
 ### Dove pubblicarla
 
@@ -226,8 +296,8 @@ Da evitare:
    Google Play.
 2. **iOS:** iscrizione all'Apple Developer Program, build da Xcode sul tuo iPhone, poi
    TestFlight.
-3. **Web:** build con menu e galleria, pulsanti AR adattati, pubblicazione su itch.io o
-   Netlify.
+3. **Web:** build con il profilo `Web`, pubblicazione su itch.io o Netlify, poi landing con
+   i link agli store (aggiornando `LinkApp.PaginaDownload`).
 4. **Store:** norme sulla privacy, schede, screenshot, test chiuso di 14 giorni su Google
    Play, poi revisioni.
 

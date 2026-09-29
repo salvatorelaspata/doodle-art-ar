@@ -82,6 +82,9 @@ Assets/
 │   ├── BottoneDoodle.cs             # Interfaccia: effetto "adesivo premuto"
 │   ├── DecorazioneOndeggiante.cs    # Interfaccia: animazione delle decorazioni
 │   ├── AreaSicura.cs                # Interfaccia: adattamento a notch e angoli arrotondati
+│   ├── AvvisoSoloApp.cs             # Web: avviso "la realtà aumentata è nell'app"
+│   ├── PulsanteLinkEsterno.cs       # Web: apertura di link esterni senza blocchi popup
+│   ├── LinkApp.cs                   # Indirizzi esterni (landing di download)
 │   ├── rotate_cube.cs               # Oggetti interattivi
 │   ├── interazione_cube.cs
 │   └── Galleria/                    # Logica della galleria 3D
@@ -96,6 +99,8 @@ Assets/
 │   └── Galleria/                    # Icone dei pulsanti della galleria
 ├── Textures/Galleria/               # Carta da parati e parquet (ripetibili)
 ├── Branding/                        # Icona dell'app (anche adattiva Android) e splash screen
+├── Plugins/WebGL/LinkEsterni.jslib  # Apertura dei link nel browser (solo build Web)
+├── Settings/Build Profiles/Web.asset  # Profilo di build Web: solo menu e galleria
 ├── Resources/
 │   └── VuforiaConfiguration.asset   # Configurazione e license key Vuforia
 ├── StreamingAssets/Vuforia/
@@ -105,7 +110,8 @@ Assets/
     └── test_scaled.jpg              # Immagine da stampare / inquadrare
 ```
 
-Tutte e tre le scene sono già incluse in *Build Settings*.
+Tutte e tre le scene sono incluse nella lista globale delle scene, usata dalle build Android
+e iOS. Il profilo `Web` esclude la scena AR, perché Vuforia non supporta il browser.
 
 ## Script
 
@@ -113,7 +119,10 @@ Tutte e tre le scene sono già incluse in *Build Settings*.
 
 | Script | Ruolo |
 | --- | --- |
-| `RouterController.cs` | Navigazione tra le scene (`ApriMenuPrincipale`, `ApriStanzaVirtuale`, `ApriEsperienzaAR`) e uscita dall'app. I metodi sono pensati per essere agganciati agli `onClick` dei bottoni UI. |
+| `RouterController.cs` | Navigazione tra le scene (`ApriMenuPrincipale`, `ApriStanzaVirtuale`, `ApriEsperienzaAR`) e uscita dall'app. I metodi sono pensati per essere agganciati agli `onClick` dei bottoni UI. Nella build Web `ApriEsperienzaAR` mostra `avvisoSoloApp` invece di caricare la scena AR. |
+| `AvvisoSoloApp.cs` | Avviso animato "La realtà aumentata è nell'app", presente nel menu e nella galleria. Si vede solo nella build Web. |
+| `PulsanteLinkEsterno.cs` | Apre un indirizzo web al tocco. Nel browser usa `Plugins/WebGL/LinkEsterni.jslib` per aprire la nuova scheda al rilascio del dito, così non viene bloccata come popup. Senza indirizzo usa `LinkApp.PaginaDownload`. |
+| `LinkApp.cs` | Indirizzi esterni in un solo punto: `PaginaDownload` è la landing con i link agli store (oggi un segnaposto). |
 | `BottoneDoodle.cs` | Alla pressione sposta la "faccia" del pulsante sulla sua ombra, come un adesivo schiacciato. Campi: `faccia`, `spostamentoPremuto`, `velocita`. |
 | `DecorazioneOndeggiante.cs` | Oscillazione di rotazione e leggera fluttuazione per le decorazioni del menu. |
 | `AreaSicura.cs` | Adatta un `RectTransform` a `Screen.safeArea` e si aggiorna quando il telefono ruota. Contiene i pulsanti delle scene 02 e 03. |
