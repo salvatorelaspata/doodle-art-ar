@@ -26,6 +26,23 @@ Già impostato in *Project Settings → Player*:
 | iOS | Minimo iOS 15.0, Metal |
 | Orientamento | Rotazione automatica: menu, galleria e pulsanti si adattano a verticale e orizzontale |
 | Web | Profilo `Web` senza la scena AR, avviso "scarica l'app" al posto dell'AR, compressione Brotli con *Decompression Fallback* |
+| Build Profile | `Android - Test`, `Android - Google Play`, `iOS`, `Web`, in `Assets/Settings/Build Profiles/` (vedi sotto) |
+
+### Build Profile
+
+In *File → Build Profiles*, sezione *Build Profiles*, ci sono quattro profili pronti. Si
+seleziona il profilo, si preme **Switch Profile** e poi **Build** o **Build And Run**.
+
+| Profilo | Piattaforma | Scene | Impostazioni | Risultato |
+| --- | --- | --- | --- | --- |
+| `Android - Test` | Android | tutte e tre | *Development Build* attivo, *Build App Bundle* disattivo | APK da installare sul telefono |
+| `Android - Google Play` | Android | tutte e tre | *Development Build* disattivo, *Build App Bundle* attivo | AAB da caricare su Play Console |
+| `iOS` | iOS | tutte e tre | Build di rilascio | Progetto Xcode |
+| `Web` | Web | menu e galleria | Nessuna scena AR | Cartella da pubblicare |
+
+I profili usano tutti le Player Settings globali: nome, versione, icone e splash si cambiano
+in un punto solo e valgono per ogni piattaforma. Le app usano la lista globale delle scene;
+il profilo `Web` ha una lista sua, senza la scena AR.
 
 Il logo "Made with Unity" è stato disattivato, cosa consentita da Unity 6 anche con la
 licenza Personal. Si riattiva da *Player → Splash Image → Show Unity Logo*.
@@ -87,7 +104,7 @@ conviene quindi registrarsi come sviluppatore verificato nell'Android Developer 
 
 **Requisiti per la pubblicazione su Google Play:**
 
-- Formato **AAB** (*Build Profiles → Android → Build App Bundle (Google Play)*).
+- Formato **AAB**: è quello che produce il profilo `Android - Google Play`.
 - **Target API 36 (Android 16)**, obbligatorio per le app nuove e gli aggiornamenti dal
   31 agosto 2026, con proroga richiedibile fino al 1° novembre 2026. Il target è su
   "automatico" (livello più alto installato): prima di pubblicare verifica che l'AAB punti
@@ -114,11 +131,9 @@ tutti gli asset e richiede qualche minuto. I cambi successivi sono più rapidi.
 
 **Build di test:**
 
-1. *File → Build Profiles → Android → Switch Platform*.
-2. Nelle opzioni del profilo:
-   - *Development Build* attivo;
-   - *Run Device* sul tuo telefono;
-   - *Build App Bundle (Google Play)* disattivo, così esce un APK.
+1. *File → Build Profiles*, seleziona il profilo **Android - Test** e premi *Switch Profile*.
+   *Development Build* è già attivo e *Build App Bundle* disattivo, quindi esce un APK.
+2. Nelle opzioni del profilo scegli il tuo telefono in *Run Device*.
 3. Premi **Build And Run** e salva in `Builds/Android/DoodleArt.apk`. Unity compila e installa
    l'app sul telefono. La prima build è lenta (vari minuti), le successive molto meno.
 4. Per le build di test la firma non serve: Unity usa da solo un keystore di debug.
@@ -129,7 +144,8 @@ tutti gli asset e richiede qualche minuto. I cambi successivi sono più rapidi.
 
 1. Crea il keystore da *Player → Publishing Settings → Keystore Manager* e conservalo fuori
    dal repository (vedi [Firma dell'app](#firma-dellapp)).
-2. Disattiva *Development Build* e attiva *Build App Bundle (Google Play)*.
+2. Seleziona il profilo **Android - Google Play** e premi *Switch Profile*: build di rilascio
+   in formato AAB, già impostata.
 3. Aumenta il *Bundle Version Code* e premi **Build**: ottieni un `.aab`.
 4. Caricalo in Play Console, nel test interno.
 
@@ -177,9 +193,10 @@ sull'account, quindi per ora non sono una via pratica.
 
 **Build di test:**
 
-1. *File → Build Profiles → iOS → Switch Platform*.
+1. *File → Build Profiles*, seleziona il profilo **iOS** e premi *Switch Profile*.
 2. Premi **Build** e scegli `Builds/iOS`, già ignorata da git. Unity genera un progetto Xcode,
-   non l'app.
+   non l'app. Per il debug da Xcode puoi attivare *Development Build* nelle opzioni del
+   profilo.
 3. Apri `Builds/iOS/Unity-iPhone.xcodeproj`.
 4. Seleziona il target *Unity-iPhone*, apri *Signing & Capabilities*, spunta *Automatically
    manage signing* e scegli il tuo *Team*. Il bundle ID arriva già da Unity.
@@ -280,6 +297,60 @@ Da evitare:
   standard.
 
 ---
+
+## Landing (GitHub Pages)
+
+La cartella `landing/` contiene la pagina di presentazione dell'app, con i pulsanti per
+scaricarla dagli store. È la pagina che l'avviso "Scarica l'app" della build Web apre
+(`LinkApp.PaginaDownload`). Unity la ignora, perché sta fuori da `Assets/`.
+
+| File | Contenuto |
+| --- | --- |
+| `landing/index.html` | Pagina: apertura con logo e pulsanti degli store, "Come funziona" in tre passi, galleria 3D |
+| `landing/stile.css` | Stile coerente con l'app: colori, bordi a inchiostro, ombre nette, decorazioni animate |
+| `landing/img/` | Icona, logo, decorazioni, schermate dell'app e anteprima per i social (1200 × 630) |
+| `.github/workflows/landing.yml` | Pubblica `landing/` su GitHub Pages a ogni push su `main` che la modifica |
+
+### Pubblicarla
+
+1. Il repository deve essere **pubblico**: GitHub Pages su un repository privato richiede un
+   piano a pagamento.
+2. Su GitHub: *Settings → Pages → Build and deployment → Source* e scegli **GitHub Actions**.
+   "Deploy from a branch" non va bene: pubblicherebbe l'intero progetto Unity.
+3. Fai push su `main`. Il workflow *Landing su GitHub Pages* pubblica la pagina, che si può
+   anche avviare a mano dalla scheda *Actions*.
+4. L'indirizzo sarà `https://salvatorelaspata.github.io/doodle-art-ar/`, lo stesso già
+   impostato in `LinkApp.PaginaDownload`. Se cambi nome al repository o usi un dominio tuo,
+   aggiorna quella costante e i meta tag `og:url` e `og:image` in `index.html`.
+
+**Perché le immagini non sono in Git LFS:** GitHub Pages non serve i file LFS, quindi
+`.gitattributes` esclude da LFS i PNG e i JPG dentro `landing/`. Le immagini del progetto
+Unity restano in LFS come prima.
+
+### Collegare gli store e la versione Web
+
+In fondo a `index.html` c'è l'oggetto `LINK`:
+
+```js
+const LINK = {
+  appStore: "",   // es. "https://apps.apple.com/app/id0000000000"
+  googlePlay: "", // es. "https://play.google.com/store/apps/details?id=com.salvatorelaspata.doodleart"
+  web: ""         // es. "gioca/" se la build Web viene pubblicata dentro landing/gioca/
+};
+```
+
+- Finché un link è vuoto, il pulsante resta visibile con la scritta "Presto su" e non è
+  cliccabile. Appena lo compili diventa "Scarica su" e porta allo store.
+- Su Android il pulsante di Google Play compare per primo.
+- Quando l'app sarà sugli store, sostituisci i pulsanti con i **badge ufficiali**: "Download
+  on the App Store" dal sito Apple Marketing e "Get it on Google Play" da Google. Hanno regole
+  d'uso precise, per questo ora ci sono pulsanti nello stile dell'app senza i marchi.
+
+**Build Web sulla stessa pagina (facoltativo):** copia il contenuto della build Web in
+`landing/gioca/` e imposta `web: "gioca/"`. Nella landing comparirà il link "Oppure prova la
+galleria nel browser". La compressione Brotli con *Decompression Fallback* funziona anche su
+GitHub Pages. Tieni però conto che ogni build aggiunge qualche decina di MB alla storia del
+repository. Se diventa un problema, meglio pubblicarla su itch.io e mettere qui quel link.
 
 ## Costi in sintesi
 

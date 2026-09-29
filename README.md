@@ -12,6 +12,8 @@ Il nome dell'app è **Doodle Art Experience** (bundle ID `com.salvatorelaspata.d
 - Le attività aperte sono elencate in [TODO.md](TODO.md).
 - Le opzioni per distribuire l'app (Android, iOS, Web) sono descritte in
   [RELEASE.md](RELEASE.md).
+- La landing con i link agli store è in `landing/` e si pubblica su GitHub Pages con il
+  workflow `.github/workflows/landing.yml` (vedi RELEASE.md, "Landing").
 
 ## Requisiti
 
@@ -100,7 +102,7 @@ Assets/
 ├── Textures/Galleria/               # Carta da parati e parquet (ripetibili)
 ├── Branding/                        # Icona dell'app (anche adattiva Android) e splash screen
 ├── Plugins/WebGL/LinkEsterni.jslib  # Apertura dei link nel browser (solo build Web)
-├── Settings/Build Profiles/Web.asset  # Profilo di build Web: solo menu e galleria
+├── Settings/Build Profiles/         # Profili di build: Android - Test, Android - Google Play, iOS, Web
 ├── Resources/
 │   └── VuforiaConfiguration.asset   # Configurazione e license key Vuforia
 ├── StreamingAssets/Vuforia/
@@ -213,7 +215,8 @@ veloce in orizzontale per lo swipe. Per le proporzioni di un telefono usa il
    collegata Vuforia usa la *Play Mode* via webcam.
 3. Inquadra il target: il contenuto agganciato all'Image Target compare in overlay.
 
-Per il test su dispositivo: *File → Build Profiles*, seleziona Android o iOS e compila.
+Per il test su dispositivo: *File → Build Profiles*, seleziona il profilo `Android - Test` o
+`iOS`, premi *Switch Profile* e compila.
 Su Android l'architettura target è ARM64 e il minimo SDK richiesto è il 26 (Android 8.0).
 I passaggi completi (firma, TestFlight, Google Play, Web) sono in [RELEASE.md](RELEASE.md).
 

@@ -6,3 +6,8 @@
 *.jpg filter=lfs diff=lfs merge=lfs -text
 *.psd filter=lfs diff=lfs merge=lfs -text
 *.mp3 filter=lfs diff=lfs merge=lfs -text
+
+# Landing (GitHub Pages): le immagini restano nel repository normale, perché
+# GitHub Pages non serve i file gestiti da Git LFS.
+landing/**/*.png -filter -diff -merge -text
+landing/**/*.jpg -filter -diff -merge -text

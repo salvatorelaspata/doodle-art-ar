@@ -1,0 +1,44 @@
+# Pubblica la cartella landing/ su GitHub Pages.
+# Richiede in Settings → Pages → Build and deployment → Source: "GitHub Actions".
+name: Landing su GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "landing/**"
+      - ".github/workflows/landing.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  pubblica:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.pubblicazione.outputs.page_url }}
+    steps:
+      - name: Scarica il repository
+        uses: actions/checkout@v5
+        with:
+          sparse-checkout: landing
+
+      - name: Configura GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepara la landing
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: landing
+
+      - name: Pubblica
+        id: pubblicazione
+        uses: actions/deploy-pages@v4

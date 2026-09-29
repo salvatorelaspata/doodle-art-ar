@@ -63,10 +63,15 @@ I dettagli di ogni voce sono in [RELEASE.md](RELEASE.md).
       necessario per distribuire APK fuori dal Play Store (obbligatorio in Italia dal 2027).
 - [ ] **iOS:** iscrizione all'Apple Developer Program e prima build su iPhone da Xcode, poi
       TestFlight.
-- [ ] **Landing:** pubblicare la pagina con i pulsanti per scaricare l'app dagli store e
-      aggiornare l'indirizzo in `LinkApp.PaginaDownload`. Oggi è il segnaposto
-      `https://salvatorelaspata.github.io/doodle-art-ar/`, che l'avviso "Scarica l'app" della
-      build Web apre già.
+- [ ] **Landing:** attivare GitHub Pages con sorgente "GitHub Actions" e fare il primo
+      deploy di `landing/`. Verificare che l'indirizzo coincida con `LinkApp.PaginaDownload`
+      (vedi RELEASE.md, "Landing").
+- [ ] **Landing:** compilare i link di App Store e Google Play in `landing/index.html` (oggetto
+      `LINK`) e, a pubblicazione avvenuta, sostituire i pulsanti con i badge ufficiali.
+- [ ] **Landing:** aggiornare la schermata della galleria quando ci saranno le opere reali.
+      Oggi mostra le opere segnaposto.
+- [ ] **Norme sulla privacy:** pagina richiesta da entrambi gli store, per via della
+      fotocamera. Può stare nella landing, ad esempio `landing/privacy.html`.
 - [ ] **Web:** prima build di prova con il profilo `Web` e verifica dell'avviso "La realtà
       aumentata è nell'app" nel browser, anche da telefono.
 - [ ] **Web:** template personalizzato con `icona_app.png` come favicon.

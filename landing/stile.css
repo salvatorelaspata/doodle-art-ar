@@ -1,0 +1,447 @@
+/* Landing di Doodle Art Experience: stessi colori, bordi a inchiostro e ombre nette dell'app */
+
+:root {
+  --crema: #FFF6E6;
+  --inchiostro: #141414;
+  --giallo: #FFD93D;
+  --rosa: #FF6FB1;
+  --blu: #3D8BFF;
+  --bianco: #FFFFFF;
+  --testo: #2A2622;
+  --testo-tenue: #5E564C;
+  --bordo: 4px;
+  --ombra: 6px;
+  --raggio: 28px;
+  --margine: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--testo);
+  background: var(--crema) url("img/sfondo.png") repeat;
+  background-size: 256px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a:focus-visible {
+  outline: 4px solid var(--blu);
+  outline-offset: 4px;
+}
+
+/* ---------------------------------------------------------------- Apertura */
+
+.eroe {
+  position: relative;
+  overflow: hidden;
+  padding: 56px var(--margine) 64px;
+}
+
+.eroe__contenuto {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 48px;
+  justify-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.eroe__testo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 560px;
+}
+
+.logo {
+  margin: 0;
+  line-height: 0;
+}
+
+.logo img {
+  width: min(520px, 100%);
+}
+
+.eroe__sottotitolo {
+  margin: 16px 0 28px;
+  font-size: 20px;
+}
+
+/* ---------------------------------------------------------------- Pulsanti "adesivo" */
+
+.negozi {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 20px;
+}
+
+.pulsante {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 220px;
+  padding: 10px 26px 10px 12px;
+  border: var(--bordo) solid var(--inchiostro);
+  border-radius: 999px;
+  box-shadow: var(--ombra) var(--ombra) 0 var(--inchiostro);
+  color: var(--inchiostro);
+  text-decoration: none;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.pulsante--rosa {
+  background: var(--rosa);
+}
+
+.pulsante--giallo {
+  background: var(--giallo);
+}
+
+/* come BottoneDoodle nell'app: premendo, l'adesivo scende sulla sua ombra */
+.pulsante[href]:active {
+  transform: translate(var(--ombra), var(--ombra));
+  box-shadow: 0 0 0 var(--inchiostro);
+}
+
+.pulsante[aria-disabled="true"] {
+  cursor: default;
+}
+
+.pulsante__icona {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--inchiostro) url("img/icona_freccia.png") center / 30px no-repeat;
+  transform: rotate(90deg);
+}
+
+.pulsante[aria-disabled="true"] .pulsante__icona {
+  background-color: var(--testo-tenue);
+}
+
+.pulsante__testo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+}
+
+.pulsante__riga {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pulsante__nome {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.etichetta {
+  display: inline-block;
+  margin: 24px 0 0;
+  padding: 6px 16px;
+  border: 3px solid var(--inchiostro);
+  border-radius: 999px;
+  background: var(--bianco);
+  font-size: 15px;
+  font-weight: 700;
+  transform: rotate(-2deg);
+}
+
+.collegamento {
+  margin-top: 20px;
+  color: var(--inchiostro);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-decoration-color: var(--rosa);
+  text-underline-offset: 5px;
+}
+
+.collegamento::after {
+  content: " →";
+}
+
+/* ---------------------------------------------------------------- Telefono con schermata */
+
+.telefono {
+  width: min(270px, 72vw);
+  margin: 0;
+  padding: 10px;
+  border: var(--bordo) solid var(--inchiostro);
+  border-radius: 44px;
+  background: var(--inchiostro);
+  box-shadow: 12px 12px 0 rgba(20, 20, 20, 0.25);
+  transform: rotate(3deg);
+}
+
+.telefono img {
+  display: block;
+  width: 100%;
+  border-radius: 32px;
+}
+
+/* ---------------------------------------------------------------- Sezioni */
+
+.sezione {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px var(--margine) 56px;
+}
+
+.titolo-sezione {
+  margin: 0 0 28px;
+  font-size: clamp(30px, 7vw, 44px);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--inchiostro);
+  text-align: center;
+}
+
+/* evidenziatore giallo, come un tratto di pennarello */
+.titolo-sezione span {
+  padding: 0 6px;
+  background: linear-gradient(transparent 58%, var(--giallo) 58%, var(--giallo) 92%, transparent 92%);
+}
+
+.passi {
+  display: grid;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.scheda {
+  position: relative;
+  padding: 28px 24px 24px;
+  border: var(--bordo) solid var(--inchiostro);
+  border-radius: var(--raggio);
+  box-shadow: 8px 8px 0 var(--inchiostro);
+  text-align: center;
+}
+
+.scheda--giallo {
+  background: var(--giallo);
+}
+
+.scheda--rosa {
+  background: var(--rosa);
+}
+
+.scheda--blu {
+  background: var(--blu);
+}
+
+.scheda__numero {
+  position: absolute;
+  top: -20px;
+  left: -14px;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--inchiostro);
+  border-radius: 50%;
+  background: var(--bianco);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--inchiostro);
+}
+
+.scheda__icona {
+  width: 104px;
+  height: 104px;
+  padding: 10px;
+  border: var(--bordo) solid var(--inchiostro);
+  border-radius: 50%;
+  background: var(--bianco);
+  object-fit: contain;
+}
+
+.scheda h3 {
+  margin: 16px 0 6px;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--inchiostro);
+}
+
+.scheda p {
+  margin: 0;
+  color: var(--inchiostro);
+}
+
+.galleria {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
+.galleria__testo {
+  text-align: center;
+}
+
+.galleria__testo p {
+  margin: 0 auto;
+  max-width: 520px;
+}
+
+.cornice {
+  margin: 0;
+  overflow: hidden;
+  border: 6px solid var(--inchiostro);
+  border-radius: 22px;
+  box-shadow: 10px 10px 0 var(--inchiostro);
+  transform: rotate(-1.5deg);
+}
+
+.cornice img {
+  display: block;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------- Piede */
+
+.piede {
+  position: relative;
+  overflow: hidden;
+  padding: 72px var(--margine) 40px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--testo-tenue);
+}
+
+.piede p {
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------- Decorazioni */
+
+.doodle {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  animation: ondeggia 4.5s ease-in-out infinite alternate;
+}
+
+.doodle--fulmine {
+  top: 36px;
+  right: 5%;
+  width: 64px;
+  animation-delay: -1.5s;
+}
+
+/* su schermi stretti la nuvola coprirebbe il telefono: compare solo da 800px in su */
+.doodle--nuvola {
+  display: none;
+  bottom: 4px;
+  left: -40px;
+  animation-delay: -3s;
+}
+
+.doodle--fiore {
+  top: 8px;
+  left: 8%;
+  width: 72px;
+}
+
+.doodle--spirale {
+  top: 12px;
+  right: 9%;
+  width: 60px;
+  animation-delay: -2s;
+}
+
+@keyframes ondeggia {
+  from {
+    transform: rotate(-8deg) translateY(0);
+  }
+  to {
+    transform: rotate(8deg) translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle {
+    animation: none;
+  }
+
+  .pulsante {
+    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------- Schermi larghi */
+
+@media (min-width: 800px) {
+  .passi {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .doodle--fulmine {
+    width: 92px;
+  }
+
+  .doodle--nuvola {
+    display: block;
+    width: 160px;
+  }
+}
+
+@media (min-width: 960px) {
+  .eroe {
+    padding: 72px 32px 88px;
+  }
+
+  .eroe__contenuto {
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+  }
+
+  .eroe__testo {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .negozi {
+    justify-content: flex-start;
+  }
+
+  .telefono {
+    width: 300px;
+  }
+
+  .galleria {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+
+  .galleria__testo,
+  .galleria__testo .titolo-sezione {
+    text-align: left;
+  }
+
+  .galleria__testo p {
+    margin: 0;
+  }
+}

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doodle Art Experience</title>
+  <meta name="description" content="Le opere doodle prendono vita: visitale in una galleria 3D o inquadrale con il telefono e guardale in realtà aumentata.">
+  <meta name="theme-color" content="#FFF6E6">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Doodle Art Experience">
+  <meta property="og:description" content="Le opere doodle prendono vita: visitale in una galleria 3D o inquadrale con il telefono e guardale in realtà aumentata.">
+  <meta property="og:url" content="https://salvatorelaspata.github.io/doodle-art-ar/">
+  <meta property="og:image" content="https://salvatorelaspata.github.io/doodle-art-ar/img/anteprima_social.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+  <header class="eroe">
+    <img class="doodle doodle--fulmine" src="img/doodle_fulmine.png" alt="" width="256" height="256">
+    <img class="doodle doodle--nuvola" src="img/doodle_nuvola.png" alt="" width="256" height="176">
+
+    <div class="eroe__contenuto">
+      <div class="eroe__testo">
+        <h1 class="logo">
+          <img src="img/logo.png" alt="Doodle Art Experience" width="900" height="643">
+        </h1>
+        <p class="eroe__sottotitolo">
+          Le opere doodle prendono vita: visitale in una galleria 3D oppure inquadrale con il
+          telefono e guardale in realtà aumentata.
+        </p>
+
+        <div class="negozi" id="negozi">
+          <a class="pulsante pulsante--rosa" data-negozio="appStore" aria-disabled="true">
+            <span class="pulsante__icona" aria-hidden="true"></span>
+            <span class="pulsante__testo">
+              <span class="pulsante__riga">Presto su</span>
+              <span class="pulsante__nome">App Store</span>
+            </span>
+          </a>
+          <a class="pulsante pulsante--giallo" data-negozio="googlePlay" aria-disabled="true">
+            <span class="pulsante__icona" aria-hidden="true"></span>
+            <span class="pulsante__testo">
+              <span class="pulsante__riga">Presto su</span>
+              <span class="pulsante__nome">Google Play</span>
+            </span>
+          </a>
+        </div>
+
+        <p class="etichetta" id="stato-negozi">In arrivo per iPhone e Android</p>
+        <a class="collegamento" id="prova-web" hidden>Oppure prova la galleria nel browser</a>
+      </div>
+
+      <figure class="telefono">
+        <img src="img/schermata_menu.jpg" alt="Il menu dell'app: galleria 3D ed esperienza in realtà aumentata" width="499" height="1080">
+      </figure>
+    </div>
+  </header>
+
+  <main>
+    <section class="sezione" aria-labelledby="titolo-passi">
+      <h2 class="titolo-sezione" id="titolo-passi"><span>Come funziona</span></h2>
+      <ol class="passi">
+        <li class="scheda scheda--giallo">
+          <span class="scheda__numero" aria-hidden="true">1</span>
+          <img class="scheda__icona" src="img/icona.png" alt="" width="256" height="256">
+          <h3>Scarica l'app</h3>
+          <p>Disponibile per iPhone e Android.</p>
+        </li>
+        <li class="scheda scheda--rosa">
+          <span class="scheda__numero" aria-hidden="true">2</span>
+          <img class="scheda__icona" src="img/doodle_stella.png" alt="" width="256" height="256">
+          <h3>Prepara il disegno</h3>
+          <p>Stampalo oppure aprilo su un altro schermo.</p>
+        </li>
+        <li class="scheda scheda--blu">
+          <span class="scheda__numero" aria-hidden="true">3</span>
+          <img class="scheda__icona" src="img/icona_ar.png" alt="" width="256" height="256">
+          <h3>Inquadra e guarda</h3>
+          <p>Punta la fotocamera sul disegno: l'opera prende vita in realtà aumentata.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="sezione galleria" aria-labelledby="titolo-galleria">
+      <div class="galleria__testo">
+        <h2 class="titolo-sezione" id="titolo-galleria"><span>Una galleria da visitare</span></h2>
+        <p>
+          Entra in una sala in stile doodle, passa da un'opera all'altra con uno swipe e
+          avvicinati per scoprirne la storia. Quando vuoi, un tocco su "Vedi in AR" ti porta
+          dalla galleria alla realtà aumentata.
+        </p>
+      </div>
+      <figure class="cornice">
+        <img src="img/schermata_galleria.jpg" alt="La galleria 3D: una sala con opere colorate, piante e una panca" width="1400" height="647" loading="lazy">
+      </figure>
+    </section>
+  </main>
+
+  <footer class="piede">
+    <img class="doodle doodle--fiore" src="img/doodle_fiore.png" alt="" width="256" height="256" loading="lazy">
+    <img class="doodle doodle--spirale" src="img/doodle_spirale.png" alt="" width="256" height="256" loading="lazy">
+    <p>© 2026 Salvatore La Spata · Doodle Art Experience</p>
+  </footer>
+
+  <script>
+    // Link agli store e alla versione Web: da compilare quando saranno disponibili.
+    // Finché un link è vuoto, il pulsante resta visibile ma non cliccabile ("Presto su").
+    const LINK = {
+      appStore: "",   // es. "https://apps.apple.com/app/id0000000000"
+      googlePlay: "", // es. "https://play.google.com/store/apps/details?id=com.salvatorelaspata.doodleart"
+      web: ""         // es. "gioca/" se la build Web viene pubblicata dentro landing/gioca/
+    };
+
+    document.querySelectorAll("[data-negozio]").forEach(function (pulsante) {
+      const indirizzo = LINK[pulsante.dataset.negozio];
+      if (!indirizzo) return;
+      pulsante.href = indirizzo;
+      pulsante.removeAttribute("aria-disabled");
+      pulsante.querySelector(".pulsante__riga").textContent = "Scarica su";
+    });
+
+    if (LINK.appStore || LINK.googlePlay) {
+      document.getElementById("stato-negozi").hidden = true;
+    }
+
+    if (LINK.web) {
+      const provaWeb = document.getElementById("prova-web");
+      provaWeb.href = LINK.web;
+      provaWeb.hidden = false;
+    }
+
+    // Su Android il pulsante di Google Play viene mostrato per primo
+    if (/android/i.test(navigator.userAgent)) {
+      const negozi = document.getElementById("negozi");
+      negozi.prepend(negozi.querySelector('[data-negozio="googlePlay"]'));
+    }
+  </script>
+</body>
+</html>
