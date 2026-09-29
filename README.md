@@ -12,6 +12,8 @@ Il nome dell'app è **Doodle Art Experience** (bundle ID `com.salvatorelaspata.d
 - Le attività aperte sono elencate in [TODO.md](TODO.md).
 - Le opzioni per distribuire l'app (Android, iOS, Web) sono descritte in
   [RELEASE.md](RELEASE.md).
+- **Quando modifichi l'app, aggiorna anche la landing.** Cosa aggiornare per ogni tipo di
+  modifica è nella tabella "Allineare la landing" di [RELEASE.md](RELEASE.md).
 - La landing con i link agli store è in `landing/`, con la build Web in `landing/gioca/`, e si
   pubblica su GitHub Pages con il
   workflow `.github/workflows/landing.yml` (vedi RELEASE.md, "Landing").
@@ -177,6 +179,9 @@ lampade, due piante e un piedistallo con un cubo interattivo. Le opere attuali s
      (blu) della cornice deve puntare **dentro** il muro. Assegna il nuovo asset al campo `dati`.
   4. Aggiungi la cornice all'array `opere` di `GalleriaController`, sull'oggetto `Galleria`.
      L'ordine dell'array è l'ordine della visita.
+- **Dopo aver cambiato le opere, in entrambi i casi:** aggiorna la landing, cioè la build
+  Web in `landing/gioca/` e la schermata `landing/img/schermata_galleria.jpg`. Vedi
+  "Allineare la landing" in [RELEASE.md](RELEASE.md).
 
 ## Grafica e interfaccia
 

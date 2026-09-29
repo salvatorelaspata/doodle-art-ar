@@ -62,6 +62,32 @@ Ancora da fare, perché dipende da account e segreti personali:
 - [ ] Controllare le scene in *Build Profiles*. Le app usano la lista globale con tutte e tre
       le scene, il profilo `Web` solo menu e galleria (vedi [Web](#web)).
 - [ ] Provare la build su almeno un dispositivo reale per piattaforma.
+- [ ] **Allineare la landing** con i cambiamenti di questo rilascio (vedi la sezione qui sotto).
+
+### Allineare la landing
+
+La landing (`landing/`) descrive l'app e ne ospita la versione Web, quindi resta indietro
+ogni volta che l'app cambia. Dopo ogni modifica controlla questa tabella:
+
+| Se cambi… | Aggiorna nella landing |
+| --- | --- |
+| Menu o galleria: grafica, funzioni, testi | La build Web in `landing/gioca/` (vedi [La build Web nella landing](#la-build-web-nella-landing)) e le schermate `img/schermata_menu.jpg` e `img/schermata_galleria.jpg` |
+| Le opere (nuove, sostituite, tolte) | La build Web e `img/schermata_galleria.jpg`, che oggi mostra ancora le opere segnaposto |
+| Funzioni aggiunte o tolte (camminata libera, stanze tematiche…) | I testi di "Come funziona" e "Una galleria da visitare" in `index.html` |
+| L'esperienza AR | Il passo 3 di "Come funziona" ed eventualmente una schermata nuova |
+| Nome dell'app, icona, logo o splash | `img/icona.png`, `img/favicon.png`, `img/apple-touch-icon.png`, `img/logo.png`, `img/anteprima_social.png`, poi `<title>` e meta tag in `index.html` |
+| Pubblicazione sugli store o link nuovi | L'oggetto `LINK` in fondo a `index.html` e, a pubblicazione avvenuta, i badge ufficiali |
+| Indirizzo della landing (nome del repository, dominio) | `LinkApp.PaginaDownload` nell'app e i meta tag `og:url` e `og:image` |
+
+**Schermate:** puoi farle dal *Device Simulator* di Unity (Game view) oppure da un telefono.
+
+- Mantieni gli stessi nomi di file, così la pagina non va modificata.
+- Rispetta le proporzioni attuali: menu in verticale, circa 1080 px di altezza; galleria in
+  orizzontale, circa 1400 px di larghezza. Se le proporzioni cambiano, aggiorna anche gli
+  attributi `width` e `height` delle immagini in `index.html`.
+- Salvale in JPEG, per tenerle leggere.
+
+Dopo il push su `main`, il workflow ripubblica landing e gioco insieme.
 
 ---
 
