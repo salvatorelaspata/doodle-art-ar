@@ -106,3 +106,7 @@ mono_crash*.json
 # Configurazione Vuforia: contiene la license key, non va versionata.
 Assets/Resources/VuforiaConfiguration.asset
 Assets/Resources/VuforiaConfiguration.asset.meta
+
+/IOS*/
+/ANDROID/
+/WEB/
